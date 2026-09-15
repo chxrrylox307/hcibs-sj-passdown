@@ -1,64 +1,93 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>HCIBS Senior-Junior Passdown</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: coral;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+<html> <head> <title>HCIBS SJ Passdown - Login</title>
 
-        .login-box {
-            background: white;
-            width: 350px;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            text-align: center;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: coral;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-        h1 {
-            color: coral;
-        }
+    .login-box {
+        background: white;
+        width: 350px;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        text-align: center;
+    }
 
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
+    h1 {
+        color: coral;
+        margin-bottom: 10px;
+    }
 
-        button {
-            width: 97%;
-            padding: 12px;
-            margin-top: 15px;
-            background: coral;
-            color: white;
-            border: none;
-            border-radius: 8px;
-        }
-    </style>
+    p {
+        color: #666;
+    }
+
+    input {
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    button {
+        width: 97%;
+        padding: 12px;
+        margin-top: 15px;
+        background: coral;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #ff6347;
+    }
+
+    .signup {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .signup a {
+        color: coral;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+
 </head>
 
 <body>
 
-    <div class="login-box">
-        <h1>Welcome!</h1>
-        <p>Log in to start "shopping"!</p>
+<div class="login-box">
 
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
+    <h1>Welcome!</h1>
+    <p>Log in to start "shopping"!</p>
 
-        <button>Log In</button>
+    <input type="text" placeholder="Username">
 
+    <input type="password" placeholder="Password">
+
+    <button>Log In</button>
+
+    <div class="signup">
+        Don't have an account?
+        <a href="signup.html">Sign Up</a>
     </div>
 
-</body>
-</html>
+</div>
+
+</body> </html> ```

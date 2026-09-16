@@ -1,152 +1,452 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
     <title>HCIBS SJ Passdown</title>
 
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: coral;
-        min-height: 100vh;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: coral;
+            min-height: 100vh;
+        }
 
-    .top-bar {
-        height: 70px;
-        background: white;
-        display: flex;
-        align-items: center;
-        padding: 0 25px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
+        /* TOP BAR */
 
-    .menu {
-        position: relative;
-    }
+        .top-bar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
 
-    .menu-button {
-        background: coral;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 12px 18px;
-        font-size: 16px;
-        cursor: pointer;
-    }
+        .menu {
+            position: relative;
+        }
 
-    .dropdown {
-        display: none;
-        position: absolute;
-        top: 48px;
-        left: 0;
-        background: white;
-        width: 220px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        overflow: hidden;
-        z-index: 10;
-    }
+        .menu-button {
+            background: coral;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-    .menu:hover .dropdown {
-        display: block;
-    }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 48px;
+            left: 0;
+            background: white;
+            width: 220px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            z-index: 10;
+        }
 
-    .dropdown-section {
-        padding: 12px 15px;
-        font-weight: bold;
-        color: coral;
-        border-bottom: 1px solid #eee;
-    }
+        .menu:hover .dropdown {
+            display: block;
+        }
 
-    .dropdown a {
-        display: block;
-        padding: 10px 15px;
-        text-decoration: none;
-        color: #444;
-    }
+        .dropdown-section {
+            padding: 12px 15px;
+            font-weight: bold;
+            color: coral;
+            border-bottom: 1px solid #eee;
+        }
 
-    .dropdown a:hover {
-        background: #f5f5f5;
-    }
+        .dropdown a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #444;
+        }
 
-    .content {
-        padding: 40px;
-        text-align: center;
-    }
+        .dropdown a:hover {
+            background: #f5f5f5;
+        }
 
-    .content h1 {
-        color: white;
-        font-size: 36px;
-        margin-bottom: 10px;
-    }
+        /* MAIN PAGE */
 
-    .content p {
-        color: white;
-        font-size: 18px;
-    }
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
 
-    .plus-button {
-        position: fixed;
-        right: 30px;
-        bottom: 30px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: none;
-        background: white;
-        color: coral;
-        font-size: 35px;
-        cursor: pointer;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
+        .content h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
 
-    .plus-button:hover {
-        background: #f5f5f5;
-    }
-</style>
+        .content p {
+            color: white;
+            font-size: 18px;
+        }
 
+        /* PLUS BUTTON */
+
+        .plus-button {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: coral;
+            font-size: 35px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .plus-button:hover {
+            background: #f5f5f5;
+        }
+
+        /* POPUP BACKGROUND */
+
+        .popup-background {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+
+        /* CREATE POST BOX */
+
+        .post-box {
+            background: white;
+            width: 650px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 25px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-header h2 {
+            margin: 0;
+            color: coral;
+        }
+
+        .close-button {
+            border: none;
+            background: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        /* TOOLBAR */
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .toolbar button {
+            border: 1px solid #ccc;
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .toolbar button:hover {
+            background: #eee;
+        }
+
+        /* PICTURE AREA */
+
+        .picture-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #777;
+        }
+
+        .picture-area strong {
+            color: coral;
+        }
+
+        .picture-area input {
+            margin-top: 15px;
+        }
+
+        /* CAPTION */
+
+        .caption-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            resize: vertical;
+        }
+
+        /* GUIDELINES */
+
+        .caption-guidelines {
+            background: #f7f7f7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .caption-guidelines h3 {
+            margin-top: 0;
+            color: coral;
+            font-size: 16px;
+        }
+
+        .caption-guidelines ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .caption-guidelines li {
+            margin: 6px 0;
+        }
+
+        /* POST BUTTON */
+
+        .post-button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            background: coral;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .post-button:hover {
+            background: #ff6347;
+        }
+
+        .required {
+            color: #d9534f;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
+<!-- TOP BAR -->
+
 <div class="top-bar">
 
-<div class="menu">
+    <div class="menu">
 
-    <button class="menu-button">☰ Menu</button>
+        <button class="menu-button">☰ Menu</button>
 
-    <div class="dropdown">
+        <div class="dropdown">
 
-        <div class="dropdown-section">
-            Filters
-        </div>
+            <div class="dropdown-section">
+                Filters
+            </div>
 
-        <a href="#">Stationery</a>
-        <a href="#">Books</a>
-        <a href="#">Daily Essentials</a>
-        <a href="#">Clothes</a>
-        <a href="#">Others</a>
+            <a href="#">Stationery</a>
+            <a href="#">Books</a>
+            <a href="#">Daily Essentials</a>
+            <a href="#">Clothes</a>
+            <a href="#">Others</a>
 
-        <div class="dropdown-section">
-            My History
+            <div class="dropdown-section">
+                My History
+            </div>
+
         </div>
 
     </div>
 
 </div>
-</div>
+
+
+<!-- MAIN PAGE -->
 
 <div class="content">
 
-<h1>HCIBS SJ Passdown</h1>
+    <h1>HCIBS SJ Passdown</h1>
 
-<p>Find items passed down by your seniors.</p>
+    <p>Find items passed down by your seniors.</p>
 
 </div>
 
-<button class="plus-button">+</button>
+
+<!-- PLUS BUTTON -->
+
+<button class="plus-button" onclick="openPostBox()">+</button>
+
+
+<!-- POPUP -->
+
+<div class="popup-background" id="popup">
+
+    <div class="post-box">
+
+        <div class="post-header">
+
+            <h2>Create a New Passdown</h2>
+
+            <button class="close-button" onclick="closePostBox()">
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="toolbar">
+
+            <button>📎 Upload File</button>
+
+            <button>📷 Take Picture</button>
+
+            <button><b>B</b></button>
+
+            <button><i>I</i></button>
+
+        </div>
+
+
+        <!-- PICTURE -->
+
+        <div class="picture-area">
+
+            <strong>Upload a picture of your item</strong>
+
+            <br>
+
+            <span>Picture is required to make a post.</span>
+
+            <br>
+
+            <input type="file" id="picture" accept="image/*">
+
+        </div>
+
+
+        <!-- CAPTION -->
+
+        <label class="caption-label">
+            Caption *
+        </label>
+
+        <textarea
+            id="caption"
+            placeholder="Describe the item you are passing down..."
+        ></textarea>
+
+
+        <!-- CAPTION GUIDELINES -->
+
+        <div class="caption-guidelines">
+
+            <h3>Caption Guidelines</h3>
+
+            <ul>
+
+                <li>State what the item is.</li>
+
+                <li>Mention the condition of the item.</li>
+
+                <li>Include important details such as size, colour or brand.</li>
+
+                <li>Keep your caption clear and appropriate.</li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- POST -->
+
+        <button class="post-button" onclick="createPost()">
+            Post
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function openPostBox() {
+        document.getElementById("popup").style.display = "flex";
+    }
+
+
+    function closePostBox() {
+        document.getElementById("popup").style.display = "none";
+    }
+
+
+    function createPost() {
+
+        const picture = document.getElementById("picture").files.length;
+        const caption = document.getElementById("caption").value.trim();
+
+        if (picture === 0) {
+            alert("Please upload a picture before posting.");
+            return;
+        }
+
+        if (caption === "") {
+            alert("Please write a caption before posting.");
+            return;
+        }
+
+        alert("Post created successfully!");
+
+        closePostBox();
+    }
+
+</script>
 
 </body>
 

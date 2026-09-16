@@ -66,6 +66,7 @@
             padding: 10px 15px;
             text-decoration: none;
             color: #444;
+            cursor: pointer;
         }
 
         .dropdown a:hover {
@@ -90,6 +91,47 @@
             font-size: 18px;
         }
 
+        /* POSTS */
+
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 0 40px 100px;
+            justify-content: center;
+        }
+
+        .post-card {
+            background: white;
+            width: 280px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .post-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .post-card p {
+            color: #444;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .category-label {
+            display: inline-block;
+            background: coral;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
         /* PLUS BUTTON */
 
         .plus-button {
@@ -105,6 +147,7 @@
             font-size: 35px;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 15;
         }
 
         .plus-button:hover {
@@ -181,14 +224,20 @@
             background: #eee;
         }
 
-        /* PICTURE AREA */
+        /* PICTURE */
+
+        .field-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
 
         .picture-area {
             border: 2px dashed #ccc;
             border-radius: 10px;
             padding: 30px;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #777;
         }
 
@@ -202,12 +251,6 @@
 
         /* CAPTION */
 
-        .caption-label {
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: block;
-        }
-
         textarea {
             width: 100%;
             height: 120px;
@@ -218,6 +261,21 @@
             font-family: Arial, sans-serif;
             font-size: 15px;
             resize: vertical;
+        }
+
+        /* CATEGORY */
+
+        .category-container {
+            margin-top: 20px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
         }
 
         /* GUIDELINES */
@@ -243,7 +301,7 @@
         }
 
         .caption-guidelines li {
-            margin: 6px 0;
+            margin: 8px 0;
         }
 
         /* POST BUTTON */
@@ -264,11 +322,6 @@
             background: #ff6347;
         }
 
-        .required {
-            color: #d9534f;
-            font-size: 13px;
-            margin-top: 5px;
-        }
     </style>
 </head>
 
@@ -288,11 +341,12 @@
                 Filters
             </div>
 
-            <a href="#">Stationery</a>
-            <a href="#">Books</a>
-            <a href="#">Daily Essentials</a>
-            <a href="#">Clothes</a>
-            <a href="#">Others</a>
+            <a onclick="filterPosts('All')">All</a>
+            <a onclick="filterPosts('Stationery')">Stationery</a>
+            <a onclick="filterPosts('Books')">Books</a>
+            <a onclick="filterPosts('Daily Essentials')">Daily Essentials</a>
+            <a onclick="filterPosts('Clothes')">Clothes</a>
+            <a onclick="filterPosts('Others')">Others</a>
 
             <div class="dropdown-section">
                 My History
@@ -316,12 +370,18 @@
 </div>
 
 
+<!-- POSTS WILL APPEAR HERE -->
+
+<div class="posts" id="postsContainer">
+</div>
+
+
 <!-- PLUS BUTTON -->
 
 <button class="plus-button" onclick="openPostBox()">+</button>
 
 
-<!-- POPUP -->
+<!-- CREATE POST POPUP -->
 
 <div class="popup-background" id="popup">
 
@@ -329,7 +389,7 @@
 
         <div class="post-header">
 
-            <h2>Create a New Passdown</h2>
+            <h2>Pass down a new object!</h2>
 
             <button class="close-button" onclick="closePostBox()">
                 ×
@@ -342,8 +402,6 @@
 
         <div class="toolbar">
 
-            <button>📎 Upload File</button>
-
             <button>📷 Take Picture</button>
 
             <button><b>B</b></button>
@@ -355,24 +413,32 @@
 
         <!-- PICTURE -->
 
+        <label class="field-label">
+            Picture *
+        </label>
+
         <div class="picture-area">
 
             <strong>Upload a picture of your item</strong>
 
             <br>
 
-            <span>Picture is required to make a post.</span>
+            <span>A picture is required to make a post.</span>
 
             <br>
 
-            <input type="file" id="picture" accept="image/*">
+            <input
+                type="file"
+                id="picture"
+                accept="image/*"
+            >
 
         </div>
 
 
         <!-- CAPTION -->
 
-        <label class="caption-label">
+        <label class="field-label">
             Caption *
         </label>
 
@@ -380,6 +446,45 @@
             id="caption"
             placeholder="Describe the item you are passing down..."
         ></textarea>
+
+
+        <!-- CATEGORY -->
+
+        <div class="category-container">
+
+            <label class="field-label">
+                Category *
+            </label>
+
+            <select id="category">
+
+                <option value="">
+                    Select a category
+                </option>
+
+                <option value="Stationery">
+                    Stationery
+                </option>
+
+                <option value="Books">
+                    Books
+                </option>
+
+                <option value="Daily Essentials">
+                    Daily Essentials
+                </option>
+
+                <option value="Clothes">
+                    Clothes
+                </option>
+
+                <option value="Others">
+                    Others
+                </option>
+
+            </select>
+
+        </div>
 
 
         <!-- CAPTION GUIDELINES -->
@@ -390,20 +495,28 @@
 
             <ul>
 
-                <li>State what the item is.</li>
+                <li>
+                    The condition of the item / any issues with the item
+                </li>
 
-                <li>Mention the condition of the item.</li>
+                <li>
+                    Size of clothing
+                </li>
 
-                <li>Include important details such as size, colour or brand.</li>
+                <li>
+                    Brief description of the item e.g. what it is, color, size
+                </li>
 
-                <li>Keep your caption clear and appropriate.</li>
+                <li>
+                    Any other comments the claimer should know
+                </li>
 
             </ul>
 
         </div>
 
 
-        <!-- POST -->
+        <!-- POST BUTTON -->
 
         <button class="post-button" onclick="createPost()">
             Post
@@ -416,34 +529,150 @@
 
 <script>
 
+    let posts = [];
+
+
+    // OPEN POPUP
+
     function openPostBox() {
         document.getElementById("popup").style.display = "flex";
     }
 
+
+    // CLOSE POPUP
 
     function closePostBox() {
         document.getElementById("popup").style.display = "none";
     }
 
 
+    // CREATE POST
+
     function createPost() {
 
-        const picture = document.getElementById("picture").files.length;
+        const pictureInput = document.getElementById("picture");
         const caption = document.getElementById("caption").value.trim();
+        const category = document.getElementById("category").value;
 
-        if (picture === 0) {
+        const picture = pictureInput.files[0];
+
+
+        // CHECK PICTURE
+
+        if (!picture) {
             alert("Please upload a picture before posting.");
             return;
         }
+
+
+        // CHECK CAPTION
 
         if (caption === "") {
             alert("Please write a caption before posting.");
             return;
         }
 
-        alert("Post created successfully!");
+
+        // CHECK CATEGORY
+
+        if (category === "") {
+            alert("Please select a category before posting.");
+            return;
+        }
+
+
+        // CREATE IMAGE PREVIEW
+
+        const imageURL = URL.createObjectURL(picture);
+
+
+        // SAVE POST
+
+        posts.push({
+            image: imageURL,
+            caption: caption,
+            category: category
+        });
+
+
+        // SHOW POSTS
+
+        displayPosts(posts);
+
+
+        // RESET FORM
+
+        pictureInput.value = "";
+        document.getElementById("caption").value = "";
+        document.getElementById("category").value = "";
+
+
+        // CLOSE POPUP
 
         closePostBox();
+
+    }
+
+
+    // DISPLAY POSTS
+
+    function displayPosts(postList) {
+
+        const container =
+            document.getElementById("postsContainer");
+
+        container.innerHTML = "";
+
+
+        postList.forEach(function(post) {
+
+            const card = document.createElement("div");
+
+            card.className = "post-card";
+
+            card.innerHTML = `
+
+                <img src="${post.image}">
+
+                <span class="category-label">
+                    ${post.category}
+                </span>
+
+                <p>
+                    ${post.caption}
+                </p>
+
+            `;
+
+            container.appendChild(card);
+
+        });
+
+    }
+
+
+    // FILTER POSTS
+
+    function filterPosts(category) {
+
+        if (category === "All") {
+
+            displayPosts(posts);
+
+            return;
+
+        }
+
+
+        const filteredPosts = posts.filter(function(post) {
+
+            return post.category === category;
+
+        });
+
+
+        displayPosts(filteredPosts);
+
     }
 
 </script>
